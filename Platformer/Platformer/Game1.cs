@@ -1,6 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MonoGame.Extended;
+using MonoGame.Extended.Tiled;
+using MonoGame.Extended.Tiled.Graphics;
+using MonoGame.Extended.ViewportAdapters;
+
 
 namespace Platformer
 {
@@ -11,6 +16,10 @@ namespace Platformer
         SpriteBatch spriteBatch;
 
         Player player = new Player(); //Create an instance of our player class
+
+        Camera2D camera = null; //Creates an instance of a 2D camera
+        TiledMap map = null; //Creates an instance of a Tiled map
+        TiledMapRenderer mapRenderer = null; // Creates an instance of what makes a Tiled map
 
 
         public Game1()
@@ -38,6 +47,15 @@ namespace Platformer
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             player.Load(Content); //Call the 'Load' Function in the Player class
+
+            BoxingViewportAdapter viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, graphics.GraphicsDevice.Viewport.Width, graphics.GraphicsDevice.Viewport.Height);
+
+            camera = new Camera2D(viewportAdapter);
+            camera.Position = new Vector2(0, graphics.GraphicsDevice.Viewport.Height);
+
+            map = Content.Load<TiledMap>("Level1");
+            mapRenderer = new TiledMapRenderer(GraphicsDevice);
+
 
         }
 
@@ -75,7 +93,12 @@ namespace Platformer
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
-            spriteBatch.Begin();
+
+            var viewMatrix = camera.GetViewMatrix();
+            var projectionMatrix = Matrix.CreateOrthographicOffCenter(0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, 0, 0.0f, -1.0f);
+
+            spriteBatch.Begin(transformMatrix: viewMatrix);
+            mapRenderer.Draw(map, ref viewMatrix, ref projectionMatrix);
             player.Draw(spriteBatch);
 
             spriteBatch.End();
