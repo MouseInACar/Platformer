@@ -4,7 +4,9 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/s181793/source/repos/Platformer/Platformer/Content/Arial.spritefont</File>
-    <File>C:/Users/s181793/source/repos/Platformer/Platformer/Content/hero.png</File>
+    <File>C:/Users/s181793/Documents/GitHub/Platformer/Platformer/Platformer/Content/Arial.spritefont</File>
+    <File>C:/Users/s181793/Documents/GitHub/Platformer/Platformer/Platformer/Content/hero.png</File>
+    <File>C:/Users/s181793/Documents/GitHub/Platformer/Platformer/Platformer/Content/Tileset.png</File>
+    <File>C:/Users/s181793/Documents/GitHub/Platformer/Platformer/Platformer/Content/Level1.tmx</File>
   </SourceFiles>
 </SourceFileCollection>
