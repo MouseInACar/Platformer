@@ -145,9 +145,19 @@ namespace Platformer
             {
                 hero = CollideLeft(hero, leftTile, playerPrediction);
             }
-
-
-
+            
+            if (rightCheck == true) // check for collisions with the tiles right of the player
+            {
+                hero = CollideRight(hero, rightTile, playerPrediction);
+            }
+            if (bottomCheck == true) // check for collisions with the tiles below the player
+            {
+                hero = CollideBelow(hero, bottomTile, playerPrediction);
+            }
+            if (topCheck == true) // check for collisions with the tiles above the player
+            {
+                hero = CollideAbove(hero, topTile, playerPrediction);
+            }
 
             return hero;
         }
