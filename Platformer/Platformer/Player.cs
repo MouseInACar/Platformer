@@ -62,7 +62,10 @@ namespace Platformer
             //}
 
             playerSprite.velocity = localAcceleration * deltaTime;
-            playerSprite.position += playerSprite.velocity * deltaTime; 
+            playerSprite.position += playerSprite.velocity * deltaTime;
+
+            collision.game = game;
+            playerSprite = collision.CollideWithPlatforms(playerSprite, deltaTime);
 
         }
 
