@@ -60,6 +60,49 @@ namespace Platformer
             return hero;
         }
 
+        Sprite CollideRight(Sprite hero, Vector2 tileIndex, Sprite playerPrediction)
+        {
+            Sprite tile = game.levelGrid[(int)tileIndex.X, (int)tileIndex.Y];
+
+            if (IsColliding(playerPrediction, tile) == true && hero.velocity.X > 0)
+            {
+                hero.position.X = tile.leftEdge - hero.width + hero.offset.X;
+                hero.velocity.X = 0;
+            }
+
+            return hero;
+        }
+
+        Sprite CollideAbove(Sprite hero, Vector2 tileIndex, Sprite playerPrediction)
+        {
+            Sprite tile = game.levelGrid[(int)tileIndex.X, (int)tileIndex.Y];
+
+            if (IsColliding(playerPrediction, tile) == true && hero.velocity.Y < 0)
+            {
+                hero.position.Y = tile.bottomEdge + hero.offset.Y;
+                hero.velocity.Y = 0;
+            }
+
+            return hero;
+        }
+
+        Sprite CollideBelow(Sprite hero, Vector2 tileIndex, Sprite playerPrediction)
+        {
+            Sprite tile = game.levelGrid[(int)tileIndex.X, (int)tileIndex.Y];
+            if (IsColliding(playerPrediction, tile) == true && hero.velocity.Y > 0)
+            {
+                hero.position.Y = tile.topEdge - hero.offset.Y + hero.offset.Y;
+            }
+
+            return hero;
+        }
+
+
+
+
+
+
+
         public Sprite CollideWithPlatforms(Sprite hero, float deltaTime)
         {
             //Create a copy of the hero that will move to where the hero will be in the naxt frame
