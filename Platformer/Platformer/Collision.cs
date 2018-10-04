@@ -91,7 +91,7 @@ namespace Platformer
             Sprite tile = game.levelGrid[(int)tileIndex.X, (int)tileIndex.Y];
             if (IsColliding(playerPrediction, tile) == true && hero.velocity.Y > 0)
             {
-                hero.position.Y = tile.topEdge - hero.offset.Y + hero.offset.Y;
+                hero.position.Y = tile.topEdge - hero.height + hero.offset.Y;
                 hero.velocity.Y = 0;
             }
 
@@ -216,6 +216,31 @@ namespace Platformer
             if (topCheck == true) // check for collisions with the tiles above the player
             {
                 hero = CollideAbove(hero, topTile, playerPrediction);
+            }
+
+            //check for collisions with the tiles below and to the left of the player
+            if (leftCheck == false && bottomCheck == false && bottomLeftCheck == true)
+            {
+                //... then properly check for the diagonals.
+                hero = CollideBottomDiagonals(hero, bottomLeftTile, playerPrediction);
+            }
+
+            // Check for collisions with the tiles below and to the right of the player
+            if (rightCheck == false && bottomCheck == false & bottomRightCheck == true)
+            {
+                //... then properly fheck for diagonals
+                hero = CollideBottomDiagonals(hero, bottomRightTile, playerPrediction);
+            }
+
+            //Check for collisions with the tiles above and to the left of the player
+            if (leftCheck == false && topCheck == false && topLeftCheck == true)
+            {
+                hero = CollideAboveDiagonals(hero, topLeftTile, playerPrediction);
+            }
+
+            if (rightCheck == false && topCheck == false && topRightCheck == true)
+            {
+                hero = CollideAboveDiagonals(hero, topRightTile, playerPrediction);
             }
 
             return hero;
