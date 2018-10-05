@@ -93,6 +93,7 @@ namespace Platformer
             {
                 hero.position.Y = tile.topEdge - hero.height + hero.offset.Y;
                 hero.velocity.Y = 0;
+                hero.canJump = true;
             }
 
             return hero;
@@ -111,19 +112,20 @@ namespace Platformer
                 {
                     // if the top edge is closest, collision is happening to the right of the platform
                     hero.position.Y = tile.topEdge - hero.height + hero.offset.Y;
+                    hero.canJump = true;
                     hero.velocity.Y = 0;
                 }
                 else if (rightEdgeDistance < leftEdgeDistance)
                 {
                     // if the right edge is closest, the collision is happening to the right of the platform
                     hero.position.X = tile.rightEdge + hero.offset.X;
-                    hero.velocity.X = 0;
+                    //hero.velocity.X = 0;
                 }
                 else
                 {
                     // else if the left edge is cloest, the collision is happening to the left of the platform
                     hero.position.X = tile.leftEdge - hero.width + hero.offset.X;
-                    hero.velocity.X = 0;
+                    //hero.velocity.X = 0;
                 }
             }
             return hero;
@@ -140,17 +142,17 @@ namespace Platformer
                 if (bottomEdgeDistance < leftEdgeDistance && bottomEdgeDistance < rightEdgeDistance)
                 {
                     hero.position.Y = tile.bottomEdge + hero.offset.Y;
-                    hero.velocity.Y = 0;
+                    //hero.velocity.Y = 0;
                 }
                 else if (leftEdgeDistance < rightEdgeDistance)
                 {
                     hero.position.X = tile.rightEdge + hero.offset.X;
-                    hero.velocity.X = 0;
+                    //hero.velocity.X = 0;
                 }
                 else
                 {
                     hero.position.X = tile.leftEdge - hero.width + hero.offset.X;
-                    hero.velocity.X = 0;
+                    //hero.velocity.X = 0;
                 }
             }
             return hero;
@@ -245,5 +247,41 @@ namespace Platformer
 
             return hero;
         }
+
+        public Sprite CollideWithMonsta(Player hero, Enemy monsta, float deltaTime, Game1 theGame)
+        {
+            Sprite playerPrediction = new Sprite();
+            playerPrediction.position = hero.playerSprite.position;
+            playerPrediction.width = hero.playerSprite.width;
+            playerPrediction.height = hero.playerSprite.height;
+            playerPrediction.offset = hero.playerSprite.offset;
+            playerPrediction.UpdateHitBox();
+
+            playerPrediction.position += hero.playerSprite.velocity * deltaTime;
+
+            //if dere is a cowwision
+            if (IsColliding(hero.playerSprite, monsta.enemySprite))
+            {
+                int leftEdgeDistance = Math.Abs(monsta.enemySprite.leftEdge - playerPrediction.rightEdge);
+                int rightEdgeDistance = Math.Abs(monsta.enemySprite.rightEdge - playerPrediction.leftEdge);
+                int topEdgeDistance = Math.Abs(monsta.enemySprite.topEdge - playerPrediction.bottomEdge);
+                int bottomEdgeDistance = Math.Abs(monsta.enemySprite.bottomEdge - playerPrediction.topEdge);
+
+                // ...Check wich edge of da monsta is closest.............
+                if (topEdgeDistance < leftEdgeDistance && topEdgeDistance < rightEdgeDistance && topEdgeDistance < bottomEdgeDistance)
+                {
+                    theGame.enemies.Remove(monsta);
+                    hero.playerSprite.velocity.Y -= hero.jumpStrength * deltaTime;
+                    hero.playerSprite.canJump = false;
+                }
+                else
+                {
+                    //player ded
+                    theGame.Exit();
+                }
+            }
+            return hero.playerSprite;
+        }
+
     }
 }

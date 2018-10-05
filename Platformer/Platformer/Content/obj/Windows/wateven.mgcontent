@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SourceFile>C:/Users/s181793/Documents/GitHub/Platformer/Platformer/Platformer/Content/wateven.ogg</SourceFile>
+  <SourceTime>2018-10-05T09:40:22.7072409+10:00</SourceTime>
+  <DestFile>C:/Users/s181793/Documents/GitHub/Platformer/Platformer/Platformer/Content/bin/Windows/wateven.xnb</DestFile>
+  <DestTime>2018-10-05T10:30:01.8806339+10:00</DestTime>
+  <Importer>OggImporter</Importer>
+  <ImporterTime>2017-03-02T02:05:36+11:00</ImporterTime>
+  <Processor>SongProcessor</Processor>
+  <ProcessorTime>2017-03-02T02:05:36+11:00</ProcessorTime>
+  <Parameters>
+    <Key>Quality</Key>
+    <Value>Best</Value>
+  </Parameters>
+  <Dependencies />
+  <BuildAsset />
+  <BuildOutput>
+    <string>C:/Users/s181793/Documents/GitHub/Platformer/Platformer/Platformer/Content/bin/Windows/wateven.wma</string>
+  </BuildOutput>
+</PipelineBuildEvent>

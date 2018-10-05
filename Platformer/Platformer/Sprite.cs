@@ -16,6 +16,8 @@ namespace Platformer
         public Vector2 velocity = Vector2.Zero;
         public Vector2 offset = Vector2.Zero;
 
+        public bool canJump = false;
+
         Texture2D texture;
 
         public int width = 0;
@@ -25,6 +27,12 @@ namespace Platformer
         public int rightEdge = 0;
         public int topEdge = 0;
         public int bottomEdge = 0;
+
+        List<AnimatedTexture> animations = new List<AnimatedTexture>();
+        List<Vector2> animationsOffsets = new List<Vector2>();
+        int currentAnimation = 0;
+
+        SpriteEffects effects = SpriteEffects.None;
 
         public Sprite()
         {
@@ -52,16 +60,43 @@ namespace Platformer
             topEdge = (int)position.Y - (int)offset.Y;
             bottomEdge = topEdge + height;
         }
+
+        public void AddAnimation(AnimatedTexture animation, int xOffset = 0, int yOffset = 0)
+        {
+            animations.Add(animation);
+            animationsOffsets.Add(new Vector2(xOffset, yOffset));
+        }
         public void Update(float deltaTime)
         {
-            
+            animations[currentAnimation].UpdateFrame(deltaTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, position - offset, Color.White);
-
+            //spriteBatch.Draw(texture, position - offset, Color.White);
+            animations[currentAnimation].DrawFrame(spriteBatch, position + animationsOffsets[currentAnimation], effects);
         }
 
+        public void SetFlipped(bool state)
+        {
+            if (state == true)
+            {
+                effects = SpriteEffects.FlipHorizontally;
+            }
+            else
+            {
+                effects = SpriteEffects.None;
+            }
+        }
+
+        public void Pause()
+        {
+            animations[currentAnimation].Pause();
+        }
+
+        public void Play()
+        {
+            animations[currentAnimation].Play();
+        }
     }
 }
